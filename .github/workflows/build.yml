@@ -89,17 +89,10 @@ jobs:
   build-darwin:
     name: Build packages for Darwin
     needs: generate-srcpkg
-    runs-on: ${{ matrix.arch.runner }}
-    strategy:
-      matrix:
-        arch:
-          - name: x86_64
-            runner: macos-13
-          - name: aarch64
-            runner: macos-14
+    runs-on: macos-14
     env:
       CC: clang
-      PLATFORM: ${{ matrix.arch.name }}-darwin
+      PLATFORM: aarch64-darwin
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -119,5 +112,6 @@ jobs:
       - name: Upload packages artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pkgs-${{ matrix.arch.name }}-darwin
+          name: pkgs-aarch64-darwin
           path: dist/
+

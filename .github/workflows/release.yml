@@ -44,8 +44,6 @@ jobs:
             name: Linux x86_64
           - tag: aarch64-linux
             name: Linux aarch64
-          - tag: x86_64-darwin
-            name: Darwin x86_64
           - tag: aarch64-darwin
             name: Darwin aarch64
     steps:
@@ -94,3 +92,4 @@ jobs:
             git commit -m 'actions: update metadata' &&
             git push
           fi
+

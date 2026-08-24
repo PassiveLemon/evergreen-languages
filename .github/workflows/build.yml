@@ -30,9 +30,9 @@ jobs:
             mingw-w64-x86_64-gcc
             python
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Download source packages artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: srcpkgs
           path: srcpkg/
@@ -41,7 +41,7 @@ jobs:
           python3 build.py
           touch dist/no-more-failure
       - name: Upload packages artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pkgs-x86_64-windows
           path: dist/
@@ -63,17 +63,17 @@ jobs:
       PLATFORM: ${{ matrix.arch.name }}-linux
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Install build tools
         run: |
           sudo apt-get -y update &&
           sudo apt-get install make ${{ matrix.arch.pkgs }}
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Download source packages artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: srcpkgs
           path: srcpkg/
@@ -82,7 +82,7 @@ jobs:
           python3 build.py
           touch dist/no-more-failure
       - name: Upload packages artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pkgs-${{ matrix.arch.name }}-linux
           path: dist/
@@ -95,13 +95,13 @@ jobs:
       PLATFORM: aarch64-darwin
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Download source packages artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: srcpkgs
           path: srcpkg/
@@ -110,7 +110,7 @@ jobs:
           python3 build.py
           touch dist/no-more-failure
       - name: Upload packages artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pkgs-aarch64-darwin
           path: dist/

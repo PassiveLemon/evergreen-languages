@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Generate
@@ -20,14 +20,15 @@ jobs:
           python3 package_sources.py
           touch srcpkg/no-more-failure
       - name: Upload source packages artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: srcpkgs
           path: srcpkg
       - name: Upload updated metadata artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: meta-update
           path: |
             lock.json
             manifest.json
+

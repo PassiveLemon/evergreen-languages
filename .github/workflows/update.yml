@@ -1,0 +1,44 @@
+name: Update lock
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-pkg:
+    uses: ./.github/workflows/build.yml
+  update-meta:
+    name: Update metadata
+    needs: build-pkg
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download updated metadata
+        uses: actions/download-artifact@v4
+        with:
+          name: meta-update
+          path: ./
+      - name: Download built packages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: pkgs-*
+          path: dist/
+          merge-multiple: true
+      - name: Generate manifest
+        run: python3 update_manifest.py
+      - name: Commit and push update metadata
+        run: |
+          if ! git diff -s --exit-code lock.json manifest.json; then
+            git config --global user.name "Github Actions" &&
+            git config --global user.email "<>" &&
+            git add lock.json manifest.json &&
+            git commit -m 'actions: update metadata' &&
+            git push
+          fi
+
